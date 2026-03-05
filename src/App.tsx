@@ -263,99 +263,110 @@ function BusinessPlan({
 }) {
   const [active, setActive] = useState(0);
 
+  const fontStack =
+    "'Microsoft YaHei','微软雅黑', Arial, 'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Segoe UI', Roboto, sans-serif";
+
   return (
     <div
       style={{
-  fontFamily:
-    "'Microsoft YaHei','微软雅黑', Arial, 'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Segoe UI', Roboto, sans-serif",
-  background: "#ffffff",
-  minHeight: "100vh",
-  color: "#202124",
-  padding: "0",
-}}
-    >
-     {/* Header */}
-<div
-  style={{
-    background: "#ffffff",
-    borderBottom: "1px solid #e0e0e0",
-    padding: "28px 40px 18px",
-  }}
->
-  <div>
-    <div
-      style={{
-        fontSize: "12px",
-        letterSpacing: "0.12em",
-        color: "#5f6368",
-        textTransform: "uppercase",
-        marginBottom: "10px",
-        fontFamily:
-          "'Microsoft YaHei','微软雅黑', Arial, 'Segoe UI', Roboto, sans-serif",
-      }}
-    >
-      BUSINESS PLAN · 商业计划书 · 2025
-    </div>
-
-    <h1
-      style={{
-        fontSize: "clamp(28px, 3.8vw, 44px)",
-        fontWeight: 800,
-        margin: "0 0 8px",
-        letterSpacing: "0.2px",
+        fontFamily: fontStack,
+        background: "#ffffff",
+        minHeight: "100vh",
         color: "#202124",
-        lineHeight: 1.15,
+        padding: "0",
       }}
     >
-      {data.overview.name}
-    </h1>
+      {/* Header */}
+      <div
+        style={{
+          background: "#ffffff",
+          borderBottom: "1px solid #e0e0e0",
+          padding: "28px 40px 18px",
+        }}
+      >
+        <div>
+          <div
+            style={{
+              fontSize: "12px",
+              letterSpacing: "0.12em",
+              color: "#5f6368",
+              textTransform: "uppercase",
+              marginBottom: "10px",
+              fontFamily: fontStack,
+            }}
+          >
+            BUSINESS PLAN · 商业计划书 · 2025
+          </div>
 
-    <p
-      style={{
-        fontSize: "15px",
-        color: "#5f6368",
-        margin: 0,
-      }}
-    >
-      {data.overview.tagline}
-    </p>
-  </div>
-</div>
+          <h1
+            style={{
+              fontSize: "clamp(28px, 3.8vw, 44px)",
+              fontWeight: 800,
+              margin: "0 0 8px",
+              letterSpacing: "0.2px",
+              color: "#202124",
+              lineHeight: 1.15,
+            }}
+          >
+            {data.overview.name}
+          </h1>
 
-      {/* Tabs */}
+          <p
+            style={{
+              fontSize: "15px",
+              color: "#5f6368",
+              margin: 0,
+            }}
+          >
+            {data.overview.tagline}
+          </p>
+        </div>
+      </div>
+
+      {/* Tabs (Sticky) */}
       <div
         style={{
           display: "flex",
-          gap: "0",
+          gap: 8,
           overflowX: "auto",
-          borderBottom: "1px solid #b8960020",
-          background: "#0d0f14",
-          padding: "0 24px",
+          borderBottom: "1px solid #e0e0e0",
+          background: "rgba(255,255,255,0.92)",
+          backdropFilter: "blur(8px)",
+          padding: "10px 16px",
           alignItems: "center",
+          position: "sticky",
+          top: 0,
+          zIndex: 10,
         }}
       >
-        {tabs.map((t, i) => (
-          <button
-            key={i}
-            onClick={() => setActive(i)}
-            style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              padding: "14px 20px",
-              fontSize: "13px",
-              whiteSpace: "nowrap",
-              color: active === i ? "#b89600" : "#7a6a50",
-              borderBottom:
-                active === i ? "2px solid #b89600" : "2px solid transparent",
-              transition: "all 0.2s",
-              fontFamily: "inherit",
-              letterSpacing: active === i ? "0.5px" : "0",
-            }}
-          >
-            {t}
-          </button>
-        ))}
+        {/* Left tabs */}
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+          {tabs.map((t, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              style={{
+                background:
+                  active === i ? "rgba(26,115,232,0.10)" : "transparent",
+                border:
+                  active === i
+                    ? "1px solid rgba(26,115,232,0.22)"
+                    : "1px solid transparent",
+                cursor: "pointer",
+                padding: "8px 10px",
+                fontSize: "13px",
+                whiteSpace: "nowrap",
+                color: active === i ? "#174ea6" : "#5f6368",
+                borderRadius: 999,
+                transition: "all 0.18s",
+                fontFamily: fontStack,
+                fontWeight: 700,
+              }}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
 
         {/* Right action buttons */}
         <div
@@ -369,15 +380,16 @@ function BusinessPlan({
           <button
             onClick={goDecision}
             style={{
-              padding: "10px 14px",
-              borderRadius: 12,
-              border: "1px solid rgba(255,215,0,0.45)",
-              background: "rgba(255,215,0,0.14)",
-              color: "#e8dcc8",
+              padding: "9px 12px",
+              borderRadius: 999,
+              border: "1px solid #e0e0e0",
+              background: "#ffffff",
+              color: "#202124",
               cursor: "pointer",
-              fontSize: "12px",
+              fontSize: "13px",
               whiteSpace: "nowrap",
-              letterSpacing: "0.5px",
+              fontWeight: 800,
+              boxShadow: "0 1px 2px rgba(60,64,67,0.12)",
             }}
           >
             CEO 决策对话框
@@ -386,15 +398,16 @@ function BusinessPlan({
           <button
             onClick={goExperience}
             style={{
-              padding: "10px 14px",
-              borderRadius: 12,
-              border: "1px solid rgba(255,255,255,0.18)",
-              background: "rgba(255,255,255,0.06)",
-              color: "#e8dcc8",
+              padding: "9px 12px",
+              borderRadius: 999,
+              border: "1px solid #1a73e8",
+              background: "#1a73e8",
+              color: "#ffffff",
               cursor: "pointer",
-              fontSize: "12px",
+              fontSize: "13px",
               whiteSpace: "nowrap",
-              letterSpacing: "0.5px",
+              fontWeight: 900,
+              boxShadow: "0 1px 2px rgba(60,64,67,0.18)",
             }}
           >
             立即体验
@@ -402,782 +415,874 @@ function BusinessPlan({
         </div>
       </div>
 
-      {/* Content */}
-      <div style={{ padding: "32px 40px", maxWidth: "960px", margin: "0 auto" }}>
-        {/* Tab 0: Overview */}
-        {active === 0 && (
-          <div>
-            <Gold small={false}>执行摘要</Gold>
-            <p
-              style={{
-                fontSize: "16px",
-                lineHeight: "1.9",
-                color: "#c8b898",
-                marginBottom: "32px",
-                borderLeft: "3px solid #b89600",
-                paddingLeft: "20px",
-              }}
-            >
-              {data.overview.mission}
-            </p>
-            <p
-              style={{
-                fontSize: "14px",
-                color: "#8a7a60",
-                lineHeight: "1.8",
-                marginBottom: "40px",
-              }}
-            >
-              <b style={{ color: "#c8b898" }}>愿景：</b>
-              {data.overview.vision}
-            </p>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                gap: "16px",
-              }}
-            >
-              {data.overview.highlights.map((h, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: "linear-gradient(135deg, #1a1810, #141008)",
-                    border: "1px solid #b8960030",
-                    borderRadius: "8px",
-                    padding: "24px 20px",
-                    textAlign: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "28px",
-                      fontWeight: "700",
-                      color: "#b89600",
-                      letterSpacing: "-1px",
-                    }}
-                  >
-                    {h.value}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      color: "#8a7a60",
-                      marginTop: "6px",
-                    }}
-                  >
-                    {h.label}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      color: "#5a4a30",
-                      marginTop: "4px",
-                    }}
-                  >
-                    {h.sub}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+      {/* Content wrapper: white card to ensure readability */}
+      <div style={{ padding: "22px 16px 36px" }}>
+        <div
+          style={{
+            maxWidth: "980px",
+            margin: "0 auto",
+            background: "#ffffff",
+            border: "1px solid #e0e0e0",
+            borderRadius: 16,
+            boxShadow: "0 1px 2px rgba(60,64,67,0.12)",
+            padding: "22px 24px",
+          }}
+        >
+          {/* Tab 0: Overview */}
+          {active === 0 && (
+            <div>
+              <Gold small={false}>执行摘要</Gold>
+              <p
+                style={{
+                  fontSize: "16px",
+                  lineHeight: "1.9",
+                  color: "#202124",
+                  marginBottom: "20px",
+                  borderLeft: "3px solid #1a73e8",
+                  paddingLeft: "14px",
+                  background: "rgba(26,115,232,0.04)",
+                  borderRadius: 10,
+                  paddingTop: 12,
+                  paddingBottom: 12,
+                  paddingRight: 12,
+                }}
+              >
+                {data.overview.mission}
+              </p>
 
-        {/* Tab 1: Problem */}
-        {active === 1 && (
-          <div>
-            <Gold>痛点深度分析</Gold>
-            <p
-              style={{
-                color: "#8a7a60",
-                marginBottom: "28px",
-                fontSize: "14px",
-              }}
-            >
-              中国民企一号位面临独特的信息困境——他们是组织中权力最高的人，却往往是信息最不真实的人。
-            </p>
-            <div style={{ display: "grid", gap: "16px" }}>
-              {data.problem.map((p, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: "#12100a",
-                    border: "1px solid #b8960020",
-                    borderRadius: "8px",
-                    padding: "24px",
-                    display: "flex",
-                    gap: "20px",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <span style={{ fontSize: "28px", flexShrink: 0 }}>
-                    {p.icon}
-                  </span>
-                  <div>
-                    <div
-                      style={{
-                        fontSize: "16px",
-                        color: "#e0cfa8",
-                        fontWeight: "600",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      {p.title}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: "14px",
-                        color: "#8a7a60",
-                        lineHeight: "1.7",
-                      }}
-                    >
-                      {p.desc}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#5f6368",
+                  lineHeight: "1.8",
+                  marginBottom: "22px",
+                }}
+              >
+                <b style={{ color: "#202124" }}>愿景：</b>
+                {data.overview.vision}
+              </p>
 
-        {/* Tab 2: Product */}
-        {active === 2 && (
-          <div>
-            <Gold>产品设计</Gold>
-            <div style={{ display: "grid", gap: "14px", marginBottom: "36px" }}>
-              {data.product.core.map((p, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: "#12100a",
-                    border: "1px solid #b8960025",
-                    borderRadius: "8px",
-                    padding: "22px 24px",
-                  }}
-                >
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                  gap: "12px",
+                }}
+              >
+                {data.overview.highlights.map((h, i) => (
                   <div
+                    key={i}
                     style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginBottom: "10px",
+                      background: "#ffffff",
+                      border: "1px solid #e0e0e0",
+                      borderRadius: 14,
+                      padding: "18px 16px",
+                      textAlign: "center",
+                      boxShadow:
+                        "0 1px 2px rgba(60,64,67,0.12), 0 1px 3px rgba(60,64,67,0.08)",
                     }}
                   >
                     <div
                       style={{
-                        fontSize: "15px",
-                        color: "#e0cfa8",
-                        fontWeight: "600",
+                        fontSize: "24px",
+                        fontWeight: 900,
+                        color: "#174ea6",
+                        letterSpacing: "-0.5px",
                       }}
                     >
-                      {p.name}
-                    </div>
-                    <span
-                      style={{
-                        fontSize: "10px",
-                        padding: "3px 10px",
-                        background:
-                          p.tag === "差异化亮点" ? "#b8960020" : "#ffffff08",
-                        color: p.tag === "差异化亮点" ? "#b89600" : "#5a4a30",
-                        borderRadius: "20px",
-                        border: `1px solid ${
-                          p.tag === "差异化亮点" ? "#b8960040" : "#ffffff10"
-                        }`,
-                        letterSpacing: "1px",
-                      }}
-                    >
-                      {p.tag}
-                    </span>
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "13px",
-                      color: "#8a7a60",
-                      lineHeight: "1.7",
-                    }}
-                  >
-                    {p.desc}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <Gold small>竞争护城河</Gold>
-            <ul
-              style={{
-                paddingLeft: "0",
-                listStyle: "none",
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-              }}
-            >
-              {data.product.moat.map((m, i) => (
-                <li
-                  key={i}
-                  style={{
-                    display: "flex",
-                    gap: "12px",
-                    alignItems: "flex-start",
-                    fontSize: "14px",
-                    color: "#8a7a60",
-                  }}
-                >
-                  <span
-                    style={{
-                      color: "#b89600",
-                      fontSize: "18px",
-                      lineHeight: "1.2",
-                    }}
-                  >
-                    ◆
-                  </span>
-                  <span>{m}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Tab 3: Market */}
-        {active === 3 && (
-          <div>
-            <Gold>目标市场</Gold>
-            <div style={{ display: "grid", gap: "12px", marginBottom: "36px" }}>
-              {data.market.segments.map((s, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: "#12100a",
-                    border: `1px solid ${i === 0 ? "#b8960050" : "#b8960018"}`,
-                    borderRadius: "8px",
-                    padding: "20px 24px",
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr 1fr auto",
-                    gap: "16px",
-                    alignItems: "center",
-                  }}
-                >
-                  <div>
-                    <div
-                      style={{
-                        fontSize: "14px",
-                        color: "#e0cfa8",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {s.name}
+                      {h.value}
                     </div>
                     <div
                       style={{
                         fontSize: "12px",
-                        color: "#6a5a40",
-                        marginTop: "4px",
-                      }}
-                    >
-                      {s.desc}
-                    </div>
-                  </div>
-                  <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: "12px", color: "#5a4a30" }}>
-                      规模
-                    </div>
-                    <div style={{ fontSize: "14px", color: "#c8b898" }}>
-                      {s.size}
-                    </div>
-                  </div>
-                  <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: "12px", color: "#5a4a30" }}>
-                      定价
-                    </div>
-                    <div style={{ fontSize: "14px", color: "#b89600" }}>
-                      {s.price}
-                    </div>
-                  </div>
-                  <span
-                    style={{
-                      fontSize: "10px",
-                      padding: "4px 12px",
-                      borderRadius: "20px",
-                      background:
-                        s.priority === "高" ? "#b8960020" : "#ffffff05",
-                      color: s.priority === "高" ? "#b89600" : "#4a3a20",
-                      border: `1px solid ${
-                        s.priority === "高" ? "#b8960040" : "#ffffff08"
-                      }`,
-                    }}
-                  >
-                    {s.priority}优先级
-                  </span>
-                </div>
-              ))}
-            </div>
-            <Gold small>GTM 进入策略</Gold>
-            <div style={{ display: "grid", gap: "10px" }}>
-              {data.market.gtm.map((g, i) => (
-                <div
-                  key={i}
-                  style={{
-                    display: "flex",
-                    gap: "14px",
-                    alignItems: "flex-start",
-                    padding: "14px 18px",
-                    background: "#12100a",
-                    borderRadius: "6px",
-                    border: "1px solid #b8960015",
-                  }}
-                >
-                  <span
-                    style={{
-                      color: "#b89600",
-                      fontFamily: "monospace",
-                      fontSize: "12px",
-                      marginTop: "2px",
-                    }}
-                  >
-                    0{i + 1}
-                  </span>
-                  <span style={{ fontSize: "13px", color: "#8a7a60" }}>{g}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Tab 4: Business Model */}
-        {active === 4 && (
-          <div>
-            <Gold>商业模式</Gold>
-            <div style={{ display: "grid", gap: "14px", marginBottom: "36px" }}>
-              {data.business.models.map((m, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: "#12100a",
-                    border: "1px solid #b8960025",
-                    borderRadius: "8px",
-                    padding: "20px 24px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                    gap: "12px",
-                  }}
-                >
-                  <div style={{ flex: 1 }}>
-                    <div
-                      style={{
-                        fontSize: "15px",
-                        color: "#e0cfa8",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {m.name}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: "13px",
-                        color: "#6a5a40",
+                        color: "#5f6368",
                         marginTop: "6px",
+                        fontWeight: 800,
                       }}
                     >
-                      {m.desc}
-                    </div>
-                  </div>
-                  <div style={{ textAlign: "right" }}>
-                    <div
-                      style={{
-                        fontSize: "20px",
-                        color: "#b89600",
-                        fontWeight: "700",
-                      }}
-                    >
-                      {m.price}
+                      {h.label}
                     </div>
                     <div
                       style={{
-                        fontSize: "11px",
-                        color: "#4a3a20",
+                        fontSize: "12px",
+                        color: "#5f6368",
                         marginTop: "4px",
                       }}
                     >
-                      毛利率 {m.margin}
+                      {h.sub}
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-            <Gold small>营收预测</Gold>
-            <div style={{ display: "grid", gap: "10px" }}>
-              {data.business.projection.map((p, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: "#12100a",
-                    border: "1px solid #b8960018",
-                    borderRadius: "8px",
-                    padding: "16px 24px",
-                    display: "grid",
-                    gridTemplateColumns: "80px 80px 100px 1fr",
-                    gap: "20px",
-                    alignItems: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "13px",
-                      color: "#b89600",
-                      fontFamily: "monospace",
-                    }}
-                  >
-                    {p.year}
-                  </div>
-                  <div>
-                    <div style={{ fontSize: "10px", color: "#4a3a20" }}>
-                      客户数
-                    </div>
-                    <div style={{ fontSize: "15px", color: "#c8b898" }}>
-                      {p.clients}
-                    </div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: "10px", color: "#4a3a20" }}>ARR</div>
-                    <div style={{ fontSize: "14px", color: "#b89600" }}>
-                      {p.arr}
-                    </div>
-                  </div>
-                  <div style={{ fontSize: "12px", color: "#5a4a30" }}>
-                    {p.focus}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+          )}
 
-        {/* Tab 5: Competition */}
-        {active === 5 && (
-          <div>
-            <Gold>竞争格局分析</Gold>
-            <div style={{ display: "grid", gap: "14px" }}>
-              {data.competition.map((c, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: "#12100a",
-                    border: "1px solid #b8960020",
-                    borderRadius: "8px",
-                    padding: "20px 24px",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                      marginBottom: "12px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontSize: "14px",
-                        color: "#e0cfa8",
-                        fontWeight: "600",
-                        whiteSpace: "pre-line",
-                      }}
-                    >
-                      {c.name}
-                    </div>
-                    <span
-                      style={{
-                        fontSize: "10px",
-                        padding: "3px 10px",
-                        borderRadius: "20px",
-                        background:
-                          c.threat === "高"
-                            ? "#ff4a2020"
-                            : c.threat === "中"
-                            ? "#b8960020"
-                            : "#ffffff08",
-                        color:
-                          c.threat === "高"
-                            ? "#ff6a40"
-                            : c.threat === "中"
-                            ? "#b89600"
-                            : "#4a3a20",
-                        border: `1px solid ${
-                          c.threat === "高"
-                            ? "#ff4a2040"
-                            : c.threat === "中"
-                            ? "#b8960040"
-                            : "#ffffff10"
-                        }`,
-                      }}
-                    >
-                      威胁: {c.threat}
-                    </span>
-                  </div>
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "1fr 1fr",
-                      gap: "12px",
-                    }}
-                  >
-                    <div>
-                      <div
-                        style={{
-                          fontSize: "10px",
-                          color: "#4a8a50",
-                          marginBottom: "4px",
-                        }}
-                      >
-                        ✓ 优势
-                      </div>
-                      <div style={{ fontSize: "12px", color: "#5a7a60" }}>
-                        {c.pros}
-                      </div>
-                    </div>
-                    <div>
-                      <div
-                        style={{
-                          fontSize: "10px",
-                          color: "#8a4a30",
-                          marginBottom: "4px",
-                        }}
-                      >
-                        ✗ 不足
-                      </div>
-                      <div style={{ fontSize: "12px", color: "#7a5040" }}>
-                        {c.cons}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Tab 6: Roadmap */}
-        {active === 6 && (
-          <div>
-            <Gold>产品路线图</Gold>
-            <div style={{ position: "relative" }}>
-              <div
+          {/* Tab 1: Problem */}
+          {active === 1 && (
+            <div>
+              <Gold>痛点深度分析</Gold>
+              <p
                 style={{
-                  position: "absolute",
-                  left: "119px",
-                  top: "16px",
-                  bottom: "16px",
-                  width: "1px",
-                  background: "linear-gradient(to bottom, #b89600, #b8960030)",
+                  color: "#5f6368",
+                  marginBottom: "16px",
+                  fontSize: "14px",
                 }}
-              />
-              <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
-                {data.roadmap.map((r, i) => (
+              >
+                中国民企一号位面临独特的信息困境——他们是组织中权力最高的人，却往往是信息最不真实的人。
+              </p>
+
+              <div style={{ display: "grid", gap: "12px" }}>
+                {data.problem.map((p, i) => (
                   <div
                     key={i}
                     style={{
+                      background: "#ffffff",
+                      border: "1px solid #e0e0e0",
+                      borderRadius: 14,
+                      padding: "18px 18px",
                       display: "flex",
-                      gap: "24px",
+                      gap: "14px",
                       alignItems: "flex-start",
+                      boxShadow:
+                        "0 1px 2px rgba(60,64,67,0.12), 0 1px 3px rgba(60,64,67,0.08)",
                     }}
                   >
-                    <div style={{ textAlign: "right", minWidth: "90px" }}>
+                    <span style={{ fontSize: "26px", flexShrink: 0 }}>
+                      {p.icon}
+                    </span>
+                    <div>
                       <div
                         style={{
-                          fontSize: "11px",
-                          color: "#b89600",
-                          fontFamily: "monospace",
+                          fontSize: "15px",
+                          color: "#202124",
+                          fontWeight: 900,
+                          marginBottom: "6px",
                         }}
                       >
-                        {r.phase}
+                        {p.title}
                       </div>
-                      <div style={{ fontSize: "10px", color: "#4a3a20" }}>
-                        {r.period}
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        width: 12,
-                        height: 12,
-                        borderRadius: "50%",
-                        background: "#b89600",
-                        flexShrink: 0,
-                        marginTop: 4,
-                        boxShadow: "0 0 12px #b8960060",
-                      }}
-                    />
-                    <div
-                      style={{
-                        flex: 1,
-                        background: "#12100a",
-                        border: "1px solid #b8960020",
-                        borderRadius: "8px",
-                        padding: "18px 20px",
-                      }}
-                    >
                       <div
                         style={{
                           fontSize: "14px",
-                          color: "#e0cfa8",
-                          fontWeight: "600",
-                          marginBottom: "12px",
+                          color: "#5f6368",
+                          lineHeight: "1.7",
                         }}
                       >
-                        {r.title}
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                        {r.tasks.map((t, j) => (
-                          <div
-                            key={j}
-                            style={{
-                              display: "flex",
-                              gap: 8,
-                              alignItems: "flex-start",
-                            }}
-                          >
-                            <span
-                              style={{
-                                color: "#b89600",
-                                fontSize: 12,
-                                marginTop: 2,
-                              }}
-                            >
-                              —
-                            </span>
-                            <span
-                              style={{
-                                fontSize: 12,
-                                color: "#7a6a50",
-                                lineHeight: "1.6",
-                              }}
-                            >
-                              {t}
-                            </span>
-                          </div>
-                        ))}
+                        {p.desc}
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Tab 7: Risks */}
-        {active === 7 && (
-          <div>
-            <Gold>风险识别与应对</Gold>
-            <div style={{ display: "grid", gap: "14px" }}>
-              {data.risks.map((r, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: "#12100a",
-                    border: `1px solid ${
-                      r.level === "高" ? "#ff4a2025" : "#b8960020"
-                    }`,
-                    borderRadius: "8px",
-                    padding: "20px 24px",
-                  }}
-                >
+          {/* Tab 2: Product */}
+          {active === 2 && (
+            <div>
+              <Gold>产品设计</Gold>
+              <div style={{ display: "grid", gap: "12px", marginBottom: "18px" }}>
+                {data.product.core.map((p, i) => (
                   <div
+                    key={i}
                     style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginBottom: "10px",
+                      background: "#ffffff",
+                      border: "1px solid #e0e0e0",
+                      borderRadius: 14,
+                      padding: "18px 18px",
+                      boxShadow:
+                        "0 1px 2px rgba(60,64,67,0.12), 0 1px 3px rgba(60,64,67,0.08)",
                     }}
                   >
                     <div
                       style={{
-                        fontSize: "14px",
-                        color: "#e0cfa8",
-                        fontWeight: "600",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        marginBottom: "10px",
+                        gap: 10,
+                        flexWrap: "wrap",
                       }}
                     >
-                      {r.risk}
+                      <div
+                        style={{
+                          fontSize: "15px",
+                          color: "#202124",
+                          fontWeight: 900,
+                        }}
+                      >
+                        {p.name}
+                      </div>
+                      <span
+                        style={{
+                          fontSize: "11px",
+                          padding: "4px 10px",
+                          background:
+                            p.tag === "差异化亮点"
+                              ? "rgba(26,115,232,0.10)"
+                              : "rgba(60,64,67,0.06)",
+                          color:
+                            p.tag === "差异化亮点" ? "#174ea6" : "#5f6368",
+                          borderRadius: 999,
+                          border: `1px solid ${
+                            p.tag === "差异化亮点"
+                              ? "rgba(26,115,232,0.22)"
+                              : "rgba(60,64,67,0.10)"
+                          }`,
+                          fontWeight: 800,
+                        }}
+                      >
+                        {p.tag}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "14px",
+                        color: "#5f6368",
+                        lineHeight: "1.7",
+                      }}
+                    >
+                      {p.desc}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <Gold small>竞争护城河</Gold>
+              <ul
+                style={{
+                  paddingLeft: "0",
+                  listStyle: "none",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                  margin: 0,
+                }}
+              >
+                {data.product.moat.map((m, i) => (
+                  <li
+                    key={i}
+                    style={{
+                      display: "flex",
+                      gap: "10px",
+                      alignItems: "flex-start",
+                      fontSize: "14px",
+                      color: "#5f6368",
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "#1a73e8",
+                        fontSize: "16px",
+                        lineHeight: "1.2",
+                        marginTop: 2,
+                      }}
+                    >
+                      ●
+                    </span>
+                    <span>{m}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Tab 3: Market */}
+          {active === 3 && (
+            <div>
+              <Gold>目标市场</Gold>
+              <div style={{ display: "grid", gap: "12px", marginBottom: "18px" }}>
+                {data.market.segments.map((s, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: "#ffffff",
+                      border: `1px solid ${
+                        i === 0 ? "rgba(26,115,232,0.25)" : "#e0e0e0"
+                      }`,
+                      borderRadius: 14,
+                      padding: "16px 18px",
+                      display: "grid",
+                      gridTemplateColumns: "1fr 1fr 1fr auto",
+                      gap: "12px",
+                      alignItems: "center",
+                      boxShadow:
+                        "0 1px 2px rgba(60,64,67,0.12), 0 1px 3px rgba(60,64,67,0.08)",
+                    }}
+                  >
+                    <div>
+                      <div
+                        style={{
+                          fontSize: "14px",
+                          color: "#202124",
+                          fontWeight: 900,
+                        }}
+                      >
+                        {s.name}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "12px",
+                          color: "#5f6368",
+                          marginTop: "4px",
+                        }}
+                      >
+                        {s.desc}
+                      </div>
+                    </div>
+                    <div style={{ textAlign: "center" }}>
+                      <div style={{ fontSize: "11px", color: "#5f6368" }}>
+                        规模
+                      </div>
+                      <div style={{ fontSize: "14px", color: "#202124", fontWeight: 800 }}>
+                        {s.size}
+                      </div>
+                    </div>
+                    <div style={{ textAlign: "center" }}>
+                      <div style={{ fontSize: "11px", color: "#5f6368" }}>
+                        定价
+                      </div>
+                      <div style={{ fontSize: "14px", color: "#174ea6", fontWeight: 900 }}>
+                        {s.price}
+                      </div>
                     </div>
                     <span
                       style={{
-                        fontSize: "10px",
-                        padding: "3px 12px",
-                        borderRadius: "20px",
+                        fontSize: "11px",
+                        padding: "6px 10px",
+                        borderRadius: 999,
                         background:
-                          r.level === "高" ? "#ff4a2018" : "#b8960018",
-                        color: r.level === "高" ? "#ff6a40" : "#b89600",
+                          s.priority === "高"
+                            ? "rgba(26,115,232,0.10)"
+                            : "rgba(60,64,67,0.06)",
+                        color: s.priority === "高" ? "#174ea6" : "#5f6368",
                         border: `1px solid ${
-                          r.level === "高" ? "#ff4a2030" : "#b8960030"
+                          s.priority === "高"
+                            ? "rgba(26,115,232,0.22)"
+                            : "rgba(60,64,67,0.10)"
                         }`,
+                        fontWeight: 800,
+                        whiteSpace: "nowrap",
                       }}
                     >
-                      风险等级: {r.level}
+                      {s.priority}优先级
                     </span>
                   </div>
+                ))}
+              </div>
+
+              <Gold small>GTM 进入策略</Gold>
+              <div style={{ display: "grid", gap: "10px" }}>
+                {data.market.gtm.map((g, i) => (
                   <div
+                    key={i}
                     style={{
-                      fontSize: "13px",
-                      color: "#6a5a40",
-                      lineHeight: "1.7",
+                      display: "flex",
+                      gap: "12px",
+                      alignItems: "flex-start",
+                      padding: "12px 14px",
+                      background: "#ffffff",
+                      borderRadius: 12,
+                      border: "1px solid #e0e0e0",
+                      boxShadow:
+                        "0 1px 2px rgba(60,64,67,0.12), 0 1px 3px rgba(60,64,67,0.08)",
                     }}
                   >
-                    <span style={{ color: "#4a7a50" }}>应对策略：</span>
-                    {r.mitigation}
+                    <span
+                      style={{
+                        color: "#174ea6",
+                        fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+                        fontSize: "12px",
+                        marginTop: "2px",
+                        fontWeight: 900,
+                      }}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span style={{ fontSize: "14px", color: "#5f6368" }}>{g}</span>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+          )}
 
-            <div
-              style={{
-                marginTop: "28px",
-                padding: "20px 24px",
-                background: "linear-gradient(135deg, #1a1810, #141008)",
-                border: "1px solid #b8960040",
-                borderRadius: "8px",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "#b89600",
-                  marginBottom: "8px",
-                  letterSpacing: "1px",
-                }}
-              >
-                核心投资假设
+          {/* Tab 4: Business Model */}
+          {active === 4 && (
+            <div>
+              <Gold>商业模式</Gold>
+              <div style={{ display: "grid", gap: "12px", marginBottom: "18px" }}>
+                {data.business.models.map((m, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: "#ffffff",
+                      border: "1px solid #e0e0e0",
+                      borderRadius: 14,
+                      padding: "16px 18px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                      gap: "12px",
+                      boxShadow:
+                        "0 1px 2px rgba(60,64,67,0.12), 0 1px 3px rgba(60,64,67,0.08)",
+                    }}
+                  >
+                    <div style={{ flex: 1, minWidth: 260 }}>
+                      <div
+                        style={{
+                          fontSize: "15px",
+                          color: "#202124",
+                          fontWeight: 900,
+                        }}
+                      >
+                        {m.name}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "13px",
+                          color: "#5f6368",
+                          marginTop: "6px",
+                        }}
+                      >
+                        {m.desc}
+                      </div>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <div
+                        style={{
+                          fontSize: "20px",
+                          color: "#174ea6",
+                          fontWeight: 900,
+                        }}
+                      >
+                        {m.price}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "12px",
+                          color: "#5f6368",
+                          marginTop: "4px",
+                        }}
+                      >
+                        毛利率 {m.margin}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "#6a5a40",
-                  lineHeight: "1.8",
-                }}
-              >
-                中国民企CEO群体有极强的付费能力与付费意愿——他们已经在猎头、咨询、私董会上花费数十甚至数百万。
-                本产品的核心赌注是：
-                <span style={{ color: "#c8b898" }}>
-                  「AI能提供人类顾问无法提供的东西——随叫随到、不说谎、记忆完整、零泄密风险。」
-                </span>
-                如果这个假设成立，定价¥30万/年将是极具吸引力的价值交换。
+
+              <Gold small>营收预测</Gold>
+              <div style={{ display: "grid", gap: "10px" }}>
+                {data.business.projection.map((p, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: "#ffffff",
+                      border: "1px solid #e0e0e0",
+                      borderRadius: 14,
+                      padding: "14px 18px",
+                      display: "grid",
+                      gridTemplateColumns: "80px 80px 110px 1fr",
+                      gap: "16px",
+                      alignItems: "center",
+                      boxShadow:
+                        "0 1px 2px rgba(60,64,67,0.12), 0 1px 3px rgba(60,64,67,0.08)",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: "12px",
+                        color: "#174ea6",
+                        fontFamily:
+                          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+                        fontWeight: 900,
+                      }}
+                    >
+                      {p.year}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: "11px", color: "#5f6368" }}>
+                        客户数
+                      </div>
+                      <div style={{ fontSize: "15px", color: "#202124", fontWeight: 900 }}>
+                        {p.clients}
+                      </div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: "11px", color: "#5f6368" }}>ARR</div>
+                      <div style={{ fontSize: "14px", color: "#174ea6", fontWeight: 900 }}>
+                        {p.arr}
+                      </div>
+                    </div>
+                    <div style={{ fontSize: "13px", color: "#5f6368" }}>
+                      {p.focus}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-        )}
+          )}
+
+          {/* Tab 5: Competition */}
+          {active === 5 && (
+            <div>
+              <Gold>竞争格局分析</Gold>
+              <div style={{ display: "grid", gap: "12px" }}>
+                {data.competition.map((c, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: "#ffffff",
+                      border: "1px solid #e0e0e0",
+                      borderRadius: 14,
+                      padding: "16px 18px",
+                      boxShadow:
+                        "0 1px 2px rgba(60,64,67,0.12), 0 1px 3px rgba(60,64,67,0.08)",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-start",
+                        marginBottom: "10px",
+                        gap: 10,
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "14px",
+                          color: "#202124",
+                          fontWeight: 900,
+                          whiteSpace: "pre-line",
+                        }}
+                      >
+                        {c.name}
+                      </div>
+
+                      <span
+                        style={{
+                          fontSize: "11px",
+                          padding: "6px 10px",
+                          borderRadius: 999,
+                          background:
+                            c.threat === "高"
+                              ? "rgba(217,48,37,0.10)"
+                              : c.threat === "中"
+                              ? "rgba(26,115,232,0.10)"
+                              : "rgba(60,64,67,0.06)",
+                          color:
+                            c.threat === "高"
+                              ? "#d93025"
+                              : c.threat === "中"
+                              ? "#174ea6"
+                              : "#5f6368",
+                          border: `1px solid ${
+                            c.threat === "高"
+                              ? "rgba(217,48,37,0.22)"
+                              : c.threat === "中"
+                              ? "rgba(26,115,232,0.22)"
+                              : "rgba(60,64,67,0.10)"
+                          }`,
+                          fontWeight: 900,
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        威胁: {c.threat}
+                      </span>
+                    </div>
+
+                    <div
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        gap: "12px",
+                      }}
+                    >
+                      <div>
+                        <div
+                          style={{
+                            fontSize: "11px",
+                            color: "#188038",
+                            marginBottom: "4px",
+                            fontWeight: 900,
+                          }}
+                        >
+                          ✓ 优势
+                        </div>
+                        <div style={{ fontSize: "13px", color: "#5f6368" }}>
+                          {c.pros}
+                        </div>
+                      </div>
+
+                      <div>
+                        <div
+                          style={{
+                            fontSize: "11px",
+                            color: "#d93025",
+                            marginBottom: "4px",
+                            fontWeight: 900,
+                          }}
+                        >
+                          ✗ 不足
+                        </div>
+                        <div style={{ fontSize: "13px", color: "#5f6368" }}>
+                          {c.cons}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Tab 6: Roadmap */}
+          {active === 6 && (
+            <div>
+              <Gold>产品路线图</Gold>
+              <div style={{ position: "relative" }}>
+                <div
+                  style={{
+                    position: "absolute",
+                    left: "119px",
+                    top: "16px",
+                    bottom: "16px",
+                    width: "1px",
+                    background:
+                      "linear-gradient(to bottom, rgba(26,115,232,0.8), rgba(26,115,232,0.15))",
+                  }}
+                />
+                <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+                  {data.roadmap.map((r, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex",
+                        gap: "18px",
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <div style={{ textAlign: "right", minWidth: "90px" }}>
+                        <div
+                          style={{
+                            fontSize: "12px",
+                            color: "#174ea6",
+                            fontFamily:
+                              "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+                            fontWeight: 900,
+                          }}
+                        >
+                          {r.phase}
+                        </div>
+                        <div style={{ fontSize: "11px", color: "#5f6368" }}>
+                          {r.period}
+                        </div>
+                      </div>
+
+                      <div
+                        style={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: "50%",
+                          background: "#1a73e8",
+                          flexShrink: 0,
+                          marginTop: 4,
+                          boxShadow: "0 0 0 4px rgba(26,115,232,0.12)",
+                        }}
+                      />
+
+                      <div
+                        style={{
+                          flex: 1,
+                          background: "#ffffff",
+                          border: "1px solid #e0e0e0",
+                          borderRadius: 14,
+                          padding: "14px 16px",
+                          boxShadow:
+                            "0 1px 2px rgba(60,64,67,0.12), 0 1px 3px rgba(60,64,67,0.08)",
+                        }}
+                      >
+                        <div
+                          style={{
+                            fontSize: "14px",
+                            color: "#202124",
+                            fontWeight: 900,
+                            marginBottom: "10px",
+                          }}
+                        >
+                          {r.title}
+                        </div>
+
+                        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                          {r.tasks.map((t, j) => (
+                            <div
+                              key={j}
+                              style={{
+                                display: "flex",
+                                gap: 8,
+                                alignItems: "flex-start",
+                              }}
+                            >
+                              <span
+                                style={{
+                                  color: "#1a73e8",
+                                  fontSize: 12,
+                                  marginTop: 2,
+                                  fontWeight: 900,
+                                }}
+                              >
+                                —
+                              </span>
+                              <span
+                                style={{
+                                  fontSize: 13,
+                                  color: "#5f6368",
+                                  lineHeight: "1.6",
+                                }}
+                              >
+                                {t}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Tab 7: Risks */}
+          {active === 7 && (
+            <div>
+              <Gold>风险识别与应对</Gold>
+              <div style={{ display: "grid", gap: "12px" }}>
+                {data.risks.map((r, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: "#ffffff",
+                      border: `1px solid ${
+                        r.level === "高" ? "rgba(217,48,37,0.22)" : "#e0e0e0"
+                      }`,
+                      borderRadius: 14,
+                      padding: "16px 18px",
+                      boxShadow:
+                        "0 1px 2px rgba(60,64,67,0.12), 0 1px 3px rgba(60,64,67,0.08)",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        marginBottom: "10px",
+                        gap: 10,
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "14px",
+                          color: "#202124",
+                          fontWeight: 900,
+                        }}
+                      >
+                        {r.risk}
+                      </div>
+
+                      <span
+                        style={{
+                          fontSize: "11px",
+                          padding: "6px 10px",
+                          borderRadius: 999,
+                          background:
+                            r.level === "高"
+                              ? "rgba(217,48,37,0.10)"
+                              : "rgba(26,115,232,0.10)",
+                          color: r.level === "高" ? "#d93025" : "#174ea6",
+                          border: `1px solid ${
+                            r.level === "高"
+                              ? "rgba(217,48,37,0.22)"
+                              : "rgba(26,115,232,0.22)"
+                          }`,
+                          fontWeight: 900,
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        风险等级: {r.level}
+                      </span>
+                    </div>
+
+                    <div
+                      style={{
+                        fontSize: "14px",
+                        color: "#5f6368",
+                        lineHeight: "1.7",
+                      }}
+                    >
+                      <span style={{ color: "#188038", fontWeight: 900 }}>
+                        应对策略：
+                      </span>
+                      {r.mitigation}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div
+                style={{
+                  marginTop: "16px",
+                  padding: "16px 18px",
+                  background: "rgba(26,115,232,0.06)",
+                  border: "1px solid rgba(26,115,232,0.20)",
+                  borderRadius: 14,
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "13px",
+                    color: "#174ea6",
+                    marginBottom: "8px",
+                    fontWeight: 900,
+                  }}
+                >
+                  核心投资假设
+                </div>
+                <div
+                  style={{
+                    fontSize: "14px",
+                    color: "#5f6368",
+                    lineHeight: "1.8",
+                  }}
+                >
+                  中国民企CEO群体有极强的付费能力与付费意愿——他们已经在猎头、咨询、私董会上花费数十甚至数百万。
+                  本产品的核心赌注是：
+                  <span style={{ color: "#202124", fontWeight: 800 }}>
+                    「AI能提供人类顾问无法提供的东西——随叫随到、不说谎、记忆完整、零泄密风险。」
+                  </span>
+                  如果这个假设成立，定价¥30万/年将是极具吸引力的价值交换。
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Footer */}
       <div
         style={{
           textAlign: "center",
-          padding: "24px",
-          borderTop: "1px solid #b8960015",
+          padding: "18px 16px",
+          borderTop: "1px solid #e0e0e0",
           fontSize: "11px",
-          color: "#3a2a10",
-          letterSpacing: "2px",
-          fontFamily: "monospace",
+          color: "#5f6368",
+          letterSpacing: "0.10em",
+          textTransform: "uppercase",
         }}
       >
         CONFIDENTIAL · 机密文件 · {data.overview.name}
@@ -1193,18 +1298,21 @@ function Gold({
   children: React.ReactNode;
   small?: boolean;
 }) {
+  // Google-like section label (readable, not decorative)
   return (
     <div
       style={{
-        fontSize: small ? "12px" : "11px",
-        letterSpacing: "3px",
-        color: "#b89600",
+        fontSize: small ? "12px" : "12px",
+        letterSpacing: "0.12em",
+        color: "#5f6368",
         textTransform: "uppercase",
-        marginBottom: small ? "14px" : "20px",
-        marginTop: small ? "28px" : "0",
-        fontFamily: "monospace",
-        borderBottom: small ? "none" : "1px solid #b8960020",
+        marginBottom: small ? "12px" : "14px",
+        marginTop: small ? "18px" : "0",
+        fontFamily:
+          "'Microsoft YaHei','微软雅黑', Arial, 'Segoe UI', Roboto, sans-serif",
+        borderBottom: small ? "none" : "1px solid #e0e0e0",
         paddingBottom: small ? "0" : "10px",
+        fontWeight: 900,
       }}
     >
       {children}
@@ -1215,21 +1323,30 @@ function Gold({
 export default function App() {
   const [page, setPage] = useState<"plan" | "experience" | "decision">("plan");
 
+  const pageShellStyle: React.CSSProperties = {
+    background: "#ffffff",
+    minHeight: "100vh",
+    color: "#202124",
+    fontFamily:
+      "'Microsoft YaHei','微软雅黑', Arial, 'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Segoe UI', Roboto, sans-serif",
+  };
+
+  const backBtnStyle: React.CSSProperties = {
+    padding: "9px 12px",
+    borderRadius: 999,
+    border: "1px solid #e0e0e0",
+    background: "#ffffff",
+    color: "#202124",
+    cursor: "pointer",
+    fontWeight: 900,
+    boxShadow: "0 1px 2px rgba(60,64,67,0.12)",
+  };
+
   if (page === "decision") {
     return (
-      <div style={{ background: "#0a0c10", minHeight: "100vh", color: "#e8dcc8" }}>
+      <div style={pageShellStyle}>
         <div style={{ padding: 16, maxWidth: 1200, margin: "0 auto" }}>
-          <button
-            onClick={() => setPage("plan")}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 12,
-              border: "1px solid rgba(255,255,255,0.18)",
-              background: "rgba(255,255,255,0.06)",
-              color: "#e8dcc8",
-              cursor: "pointer",
-            }}
-          >
+          <button onClick={() => setPage("plan")} style={backBtnStyle}>
             ← 返回商业计划书
           </button>
         </div>
@@ -1240,19 +1357,9 @@ export default function App() {
 
   if (page === "experience") {
     return (
-      <div style={{ background: "#0a0c10", minHeight: "100vh", color: "#e8dcc8" }}>
+      <div style={pageShellStyle}>
         <div style={{ padding: 16, maxWidth: 1200, margin: "0 auto" }}>
-          <button
-            onClick={() => setPage("plan")}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 12,
-              border: "1px solid rgba(255,255,255,0.18)",
-              background: "rgba(255,255,255,0.06)",
-              color: "#e8dcc8",
-              cursor: "pointer",
-            }}
-          >
+          <button onClick={() => setPage("plan")} style={backBtnStyle}>
             ← 返回商业计划书
           </button>
         </div>
@@ -1261,7 +1368,6 @@ export default function App() {
     );
   }
 
-  // 计划书页：给 BusinessPlan 注入入口函数
   return (
     <BusinessPlan
       goExperience={() => setPage("experience")}
