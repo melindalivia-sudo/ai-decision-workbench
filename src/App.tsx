@@ -253,7 +253,13 @@ const tabs = [
   "风险分析",
 ];
 
-function BusinessPlan({ goExperience }: { goExperience: () => void }) {
+function BusinessPlan({
+  goExperience,
+  goDecision,
+}: {
+  goExperience: () => void;
+  goDecision: () => void;
+}) {
   const [active, setActive] = useState(0);
 
   return (
@@ -379,85 +385,41 @@ function BusinessPlan({ goExperience }: { goExperience: () => void }) {
       </div>
 
       {/* Content */}
-      <div style={{ padding: "32px 40px", maxWidth: "960px", margin: "0 auto" }}>
-        {/* Tab 0: Overview */}
-        {active === 0 && (
-          <div>
-            <Gold small={false}>执行摘要</Gold>
-            <p
-              style={{
-                fontSize: "16px",
-                lineHeight: "1.9",
-                color: "#c8b898",
-                marginBottom: "32px",
-                borderLeft: "3px solid #b89600",
-                paddingLeft: "20px",
-              }}
-            >
-              {data.overview.mission}
-            </p>
-            <p
-              style={{
-                fontSize: "14px",
-                color: "#8a7a60",
-                lineHeight: "1.8",
-                marginBottom: "40px",
-              }}
-            >
-              <b style={{ color: "#c8b898" }}>愿景：</b>
-              {data.overview.vision}
-            </p>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                gap: "16px",
-              }}
-            >
-              {data.overview.highlights.map((h, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: "linear-gradient(135deg, #1a1810, #141008)",
-                    border: "1px solid #b8960030",
-                    borderRadius: "8px",
-                    padding: "24px 20px",
-                    textAlign: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "28px",
-                      fontWeight: "700",
-                      color: "#b89600",
-                      letterSpacing: "-1px",
-                    }}
-                  >
-                    {h.value}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      color: "#8a7a60",
-                      marginTop: "6px",
-                    }}
-                  >
-                    {h.label}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      color: "#5a4a30",
-                      marginTop: "4px",
-                    }}
-                  >
-                    {h.sub}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+      <div style={{ marginLeft: "auto", display: "flex", gap: 10, alignItems: "center" }}>
+  <button
+    onClick={goDecision}
+    style={{
+      padding: "10px 14px",
+      borderRadius: 12,
+      border: "1px solid rgba(255,215,0,0.45)",
+      background: "rgba(255,215,0,0.14)",
+      color: "#e8dcc8",
+      cursor: "pointer",
+      fontSize: "12px",
+      whiteSpace: "nowrap",
+      letterSpacing: "0.5px",
+    }}
+  >
+    CEO 决策对话框
+  </button>
+
+  <button
+    onClick={goExperience}
+    style={{
+      padding: "10px 14px",
+      borderRadius: 12,
+      border: "1px solid rgba(255,255,255,0.18)",
+      background: "rgba(255,255,255,0.06)",
+      color: "#e8dcc8",
+      cursor: "pointer",
+      fontSize: "12px",
+      whiteSpace: "nowrap",
+      letterSpacing: "0.5px",
+    }}
+  >
+    立即体验
+  </button>
+</div>
 
         {/* Tab 1: Problem */}
         {active === 1 && (
@@ -1133,9 +1095,30 @@ function Gold({ children, small = false }: { children: ReactNode; small?: boolea
     </div>
   );
 }
-
+if (page === "decision") {
+  return (
+    <div style={{ background: "#0a0c10", minHeight: "100vh", color: "#e8dcc8" }}>
+      <div style={{ padding: 16, maxWidth: 1200, margin: "0 auto" }}>
+        <button
+          onClick={() => setPage("plan")}
+          style={{
+            padding: "8px 12px",
+            borderRadius: 12,
+            border: "1px solid rgba(255,255,255,0.18)",
+            background: "rgba(255,255,255,0.06)",
+            color: "#e8dcc8",
+            cursor: "pointer",
+          }}
+        >
+          ← 返回商业计划书
+        </button>
+      </div>
+      <DecisionRoom />
+    </div>
+  );
+}
 export default function App() {
-  const [page, setPage] = useState<"plan" | "experience">("plan");
+  const [page, setPage] = useState<"plan" | "experience" | "decision">("plan");
 
   if (page === "experience") {
     return (
@@ -1160,6 +1143,9 @@ export default function App() {
     );
   }
 
-  return <BusinessPlan goExperience={() => setPage("experience")} />;
-}
-<DecisionRoom />
+return (
+  <BusinessPlan
+    goExperience={() => setPage("experience")}
+    goDecision={() => setPage("decision")}
+  />
+);
