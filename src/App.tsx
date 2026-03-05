@@ -383,7 +383,7 @@ function BusinessPlan({ goExperience }: { goExperience: () => void }) {
         {/* Tab 0: Overview */}
         {active === 0 && (
           <div>
-            <Gold>执行摘要</Gold>
+<Gold small={false}>执行摘要</Gold>
             <p
               style={{
                 fontSize: "16px",
