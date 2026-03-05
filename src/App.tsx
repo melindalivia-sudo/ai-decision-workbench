@@ -1,5 +1,6 @@
 import Experience from "./Experience";
 import { useState } from "react";
+import type { ReactNode } from "react";
 
 const data = {
   overview: {
@@ -377,13 +378,11 @@ function BusinessPlan({ goExperience }: { goExperience: () => void }) {
       </div>
 
       {/* Content */}
-      <div
-        style={{ padding: "32px 40px", maxWidth: "960px", margin: "0 auto" }}
-      >
+      <div style={{ padding: "32px 40px", maxWidth: "960px", margin: "0 auto" }}>
         {/* Tab 0: Overview */}
         {active === 0 && (
           <div>
-<Gold small={false}>执行摘要</Gold>
+            <Gold small={false}>执行摘要</Gold>
             <p
               style={{
                 fontSize: "16px",
@@ -654,17 +653,13 @@ function BusinessPlan({ goExperience }: { goExperience: () => void }) {
                     </div>
                   </div>
                   <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: "12px", color: "#5a4a30" }}>
-                      规模
-                    </div>
+                    <div style={{ fontSize: "12px", color: "#5a4a30" }}>规模</div>
                     <div style={{ fontSize: "14px", color: "#c8b898" }}>
                       {s.size}
                     </div>
                   </div>
                   <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: "12px", color: "#5a4a30" }}>
-                      定价
-                    </div>
+                    <div style={{ fontSize: "12px", color: "#5a4a30" }}>定价</div>
                     <div style={{ fontSize: "14px", color: "#b89600" }}>
                       {s.price}
                     </div>
@@ -674,8 +669,7 @@ function BusinessPlan({ goExperience }: { goExperience: () => void }) {
                       fontSize: "10px",
                       padding: "4px 12px",
                       borderRadius: "20px",
-                      background:
-                        s.priority === "高" ? "#b8960020" : "#ffffff05",
+                      background: s.priority === "高" ? "#b8960020" : "#ffffff05",
                       color: s.priority === "高" ? "#b89600" : "#4a3a20",
                       border: `1px solid ${
                         s.priority === "高" ? "#b8960040" : "#ffffff08"
@@ -712,9 +706,7 @@ function BusinessPlan({ goExperience }: { goExperience: () => void }) {
                   >
                     0{i + 1}
                   </span>
-                  <span style={{ fontSize: "13px", color: "#8a7a60" }}>
-                    {g}
-                  </span>
+                  <span style={{ fontSize: "13px", color: "#8a7a60" }}>{g}</span>
                 </div>
               ))}
             </div>
@@ -818,9 +810,7 @@ function BusinessPlan({ goExperience }: { goExperience: () => void }) {
                     </div>
                   </div>
                   <div>
-                    <div style={{ fontSize: "10px", color: "#4a3a20" }}>
-                      ARR
-                    </div>
+                    <div style={{ fontSize: "10px", color: "#4a3a20" }}>ARR</div>
                     <div style={{ fontSize: "14px", color: "#b89600" }}>
                       {p.arr}
                     </div>
@@ -953,21 +943,11 @@ function BusinessPlan({ goExperience }: { goExperience: () => void }) {
                   background: "linear-gradient(to bottom, #b89600, #b8960030)",
                 }}
               />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "28px",
-                }}
-              >
+              <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
                 {data.roadmap.map((r, i) => (
                   <div
                     key={i}
-                    style={{
-                      display: "flex",
-                      gap: "24px",
-                      alignItems: "flex-start",
-                    }}
+                    style={{ display: "flex", gap: "24px", alignItems: "flex-start" }}
                   >
                     <div style={{ textAlign: "right", minWidth: "90px" }}>
                       <div
@@ -1013,38 +993,16 @@ function BusinessPlan({ goExperience }: { goExperience: () => void }) {
                       >
                         {r.title}
                       </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "6px",
-                        }}
-                      >
+                      <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                         {r.tasks.map((t, j) => (
                           <div
                             key={j}
-                            style={{
-                              display: "flex",
-                              gap: "8px",
-                              alignItems: "flex-start",
-                            }}
+                            style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}
                           >
-                            <span
-                              style={{
-                                color: "#b89600",
-                                fontSize: "12px",
-                                marginTop: "2px",
-                              }}
-                            >
+                            <span style={{ color: "#b89600", fontSize: "12px", marginTop: "2px" }}>
                               —
                             </span>
-                            <span
-                              style={{
-                                fontSize: "12px",
-                                color: "#7a6a50",
-                                lineHeight: "1.6",
-                              }}
-                            >
+                            <span style={{ fontSize: "12px", color: "#7a6a50", lineHeight: "1.6" }}>
                               {t}
                             </span>
                           </div>
@@ -1068,9 +1026,7 @@ function BusinessPlan({ goExperience }: { goExperience: () => void }) {
                   key={i}
                   style={{
                     background: "#12100a",
-                    border: `1px solid ${
-                      r.level === "高" ? "#ff4a2025" : "#b8960020"
-                    }`,
+                    border: `1px solid ${r.level === "高" ? "#ff4a2025" : "#b8960020"}`,
                     borderRadius: "8px",
                     padding: "20px 24px",
                   }}
@@ -1083,13 +1039,7 @@ function BusinessPlan({ goExperience }: { goExperience: () => void }) {
                       marginBottom: "10px",
                     }}
                   >
-                    <div
-                      style={{
-                        fontSize: "14px",
-                        color: "#e0cfa8",
-                        fontWeight: "600",
-                      }}
-                    >
+                    <div style={{ fontSize: "14px", color: "#e0cfa8", fontWeight: "600" }}>
                       {r.risk}
                     </div>
                     <span
@@ -1097,30 +1047,22 @@ function BusinessPlan({ goExperience }: { goExperience: () => void }) {
                         fontSize: "10px",
                         padding: "3px 12px",
                         borderRadius: "20px",
-                        background:
-                          r.level === "高" ? "#ff4a2018" : "#b8960018",
+                        background: r.level === "高" ? "#ff4a2018" : "#b8960018",
                         color: r.level === "高" ? "#ff6a40" : "#b89600",
-                        border: `1px solid ${
-                          r.level === "高" ? "#ff4a2030" : "#b8960030"
-                        }`,
+                        border: `1px solid ${r.level === "高" ? "#ff4a2030" : "#b8960030"}`,
                       }}
                     >
                       风险等级: {r.level}
                     </span>
                   </div>
-                  <div
-                    style={{
-                      fontSize: "13px",
-                      color: "#6a5a40",
-                      lineHeight: "1.7",
-                    }}
-                  >
+                  <div style={{ fontSize: "13px", color: "#6a5a40", lineHeight: "1.7" }}>
                     <span style={{ color: "#4a7a50" }}>应对策略：</span>
                     {r.mitigation}
                   </div>
                 </div>
               ))}
             </div>
+
             <div
               style={{
                 marginTop: "28px",
@@ -1140,13 +1082,7 @@ function BusinessPlan({ goExperience }: { goExperience: () => void }) {
               >
                 核心投资假设
               </div>
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "#6a5a40",
-                  lineHeight: "1.8",
-                }}
-              >
+              <div style={{ fontSize: "13px", color: "#6a5a40", lineHeight: "1.8" }}>
                 中国民企CEO群体有极强的付费能力与付费意愿——他们已经在猎头、咨询、私董会上花费数十甚至数百万。
                 本产品的核心赌注是：
                 <span style={{ color: "#c8b898" }}>
@@ -1177,7 +1113,7 @@ function BusinessPlan({ goExperience }: { goExperience: () => void }) {
   );
 }
 
-function Gold({ children, small }) {
+function Gold({ children, small = false }: { children: ReactNode; small?: boolean }) {
   return (
     <div
       style={{
@@ -1196,14 +1132,13 @@ function Gold({ children, small }) {
     </div>
   );
 }
+
 export default function App() {
   const [page, setPage] = useState<"plan" | "experience">("plan");
 
   if (page === "experience") {
     return (
-      <div
-        style={{ background: "#0a0c10", minHeight: "100vh", color: "#e8dcc8" }}
-      >
+      <div style={{ background: "#0a0c10", minHeight: "100vh", color: "#e8dcc8" }}>
         <div style={{ padding: 16, maxWidth: 1200, margin: "0 auto" }}>
           <button
             onClick={() => setPage("plan")}
@@ -1224,6 +1159,5 @@ export default function App() {
     );
   }
 
-  // 计划书页：给 BusinessPlan 注入一个“去体验页”的入口函数
   return <BusinessPlan goExperience={() => setPage("experience")} />;
 }
