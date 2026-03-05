@@ -1,4 +1,272 @@
-.App {
-  font-family: sans-serif;
-  text-align: center;
+/* src/styles.css */
+
+/* ====== Google-like Theme (Readable, High Contrast) ====== */
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+
+  --text: #202124;
+  --muted: #5f6368;
+  --border: #e0e0e0;
+
+  --shadow: 0 1px 2px rgba(60, 64, 67, 0.12), 0 1px 3px rgba(60, 64, 67, 0.08);
+
+  --primary: #1a73e8;     /* Google Blue */
+  --primary-2: #174ea6;   /* deeper blue */
+  --primary-bg: rgba(26, 115, 232, 0.08);
+
+  --danger: #d93025;
+  --success: #188038;
+
+  --radius: 12px;
+  --radius-sm: 10px;
+
+  --font: "Microsoft YaHei", "微软雅黑", Arial, "PingFang SC", "Hiragino Sans GB",
+    "Noto Sans CJK SC", "Segoe UI", Roboto, Helvetica, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+button, input, textarea, select {
+  font-family: var(--font);
+}
+
+/* ====== Layout helpers for BusinessPlan / Tabs / Actions ====== */
+.dm-page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 20px 16px 44px;
+}
+
+.dm-hero { padding: 18px 0 10px; }
+
+.dm-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.dm-title {
+  font-size: 40px;
+  line-height: 1.15;
+  font-weight: 800;
+  margin: 10px 0 8px;
+}
+
+.dm-subtitle {
+  font-size: 15px;
+  color: var(--muted);
+  margin: 0 0 14px;
+}
+
+/* Top bar: tabs + actions on the right */
+.dm-topbar {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  z-index: 20;
+}
+
+.dm-topbar-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Tabs */
+.dm-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.dm-tab {
+  padding: 8px 10px;
+  border-radius: 999px;
+  color: var(--muted);
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.dm-tab:hover {
+  background: rgba(60, 64, 67, 0.06);
+  color: var(--text);
+}
+
+.dm-tabActive {
+  color: var(--primary-2);
+  background: var(--primary-bg);
+  border-color: rgba(26, 115, 232, 0.18);
+}
+
+/* Right side actions */
+.dm-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dm-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 9px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 13px;
+  box-shadow: none;
+}
+
+.dm-btn:hover { box-shadow: var(--shadow); }
+
+.dm-btnPrimary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+.dm-btnPrimary:hover {
+  background: #1765cc;
+  border-color: #1765cc;
+}
+
+.dm-btnGhost { background: transparent; }
+
+/* Cards / KPI blocks */
+.dm-cardRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+@media (max-width: 980px) {
+  .dm-cardRow { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .dm-cardRow { grid-template-columns: 1fr; }
+}
+
+.dm-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+
+.dm-cardValue {
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+
+.dm-cardLabel {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.dm-cardSub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* Fine-print footer */
+.dm-footer {
+  margin-top: 26px;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ====== DecisionRoom optional styles (if you want统一质感) ====== */
+.dr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+@media (max-width: 980px) {
+  .dr-grid { grid-template-columns: 1fr; }
+}
+
+.dr-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+
+.dr-h1 {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0;
+}
+.dr-hint {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.dr-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 800;
+  margin: 10px 0 6px;
+}
+
+.dr-input, .dr-textarea, .dr-select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #fff;
+  outline: none;
+}
+.dr-input:focus, .dr-textarea:focus, .dr-select:focus {
+  border-color: rgba(26, 115, 232, 0.55);
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.12);
+}
+
+.dr-pre {
+  white-space: pre-wrap;
+  margin: 0;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(60, 64, 67, 0.04);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.55;
 }
