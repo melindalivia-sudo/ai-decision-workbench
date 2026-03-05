@@ -114,7 +114,6 @@ async function callLiveAI(apiKey: string, decision: string): Promise<Output> {
     json.output?.[0]?.content?.map((c: any) => c.text).join("\n") ||
     "";
 
-  // 演示稳定优先：在线输出先进入 onePager
   return {
     assumptions: ["（在线模式：详见下方“决策一页纸”）"],
     risks: ["（在线模式：详见下方“决策一页纸”）"],
@@ -124,7 +123,48 @@ async function callLiveAI(apiKey: string, decision: string): Promise<Output> {
   };
 }
 
+function pill(active: boolean): React.CSSProperties {
+  return {
+    borderRadius: 999,
+    border: active ? "1px solid rgba(26,115,232,0.28)" : "1px solid #e0e0e0",
+    background: active ? "rgba(26,115,232,0.10)" : "#fff",
+    color: active ? "#174ea6" : "#202124",
+    padding: "7px 10px",
+    fontSize: 13,
+    fontWeight: 800,
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+  };
+}
+
+function buttonPrimary(enabled: boolean): React.CSSProperties {
+  return {
+    padding: "10px 12px",
+    borderRadius: 999,
+    border: "1px solid #1a73e8",
+    background: enabled ? "#1a73e8" : "rgba(60,64,67,0.10)",
+    color: enabled ? "#fff" : "#5f6368",
+    cursor: enabled ? "pointer" : "not-allowed",
+    fontWeight: 900,
+  };
+}
+
+function buttonGhost(enabled: boolean): React.CSSProperties {
+  return {
+    padding: "10px 12px",
+    borderRadius: 999,
+    border: "1px solid #e0e0e0",
+    background: enabled ? "#fff" : "rgba(60,64,67,0.06)",
+    color: enabled ? "#202124" : "#5f6368",
+    cursor: enabled ? "pointer" : "not-allowed",
+    fontWeight: 900,
+  };
+}
+
 export default function Experience() {
+  const fontStack =
+    "'Microsoft YaHei','微软雅黑', Arial, 'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Segoe UI', Roboto, sans-serif";
+
   const [decision, setDecision] = useState("");
   const [live, setLive] = useState(false);
   const [apiKey, setApiKey] = useState("");
@@ -132,21 +172,6 @@ export default function Experience() {
   const [result, setResult] = useState<Output | null>(null);
 
   const canRun = useMemo(() => decision.trim().length >= 8, [decision]);
-
-  // --------- UI Styles (dark/gold) ----------
-  const colors = {
-    text: "#e8dcc8",
-    border: "rgba(255,255,255,0.18)",
-    cardBg: "rgba(0,0,0,0.25)",
-    inputBg: "rgba(0,0,0,0.35)",
-    goldBg: "rgba(255,215,0,0.12)",
-    dimBg: "rgba(255,255,255,0.06)",
-  };
-
-  const btnBase: React.CSSProperties = {
-    color: colors.text,
-    fontWeight: 700,
-  };
 
   const templates = [
     {
@@ -166,9 +191,15 @@ export default function Experience() {
   const copy = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      alert("已复制到剪贴板 ✅");
+      alert("已复制（决策一页纸）");
     } catch {
-      alert("复制失败：请手动复制（可能是浏览器权限限制）");
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      alert("已复制（决策一页纸）");
     }
   };
 
@@ -180,21 +211,18 @@ export default function Experience() {
   const run = async () => {
     if (!canRun) return;
 
-    // 离线兜底：现场永远不翻车
     if (!live) {
       setResult(simulateAI(decision));
       return;
     }
 
-    // 在线模式：现场有网时调用真实模型（演示用）
     if (!apiKey.trim()) {
       setResult({
         assumptions: [],
         risks: [],
         signals: [],
         nextSteps: [],
-        onePager:
-          "在线模式需要填写 OpenAI API Key（仅本机演示使用，不会保存）。",
+        onePager: "在线模式需要填写 OpenAI API Key（仅本机演示使用，不会保存）。",
       });
       return;
     }
@@ -219,303 +247,211 @@ export default function Experience() {
   };
 
   return (
-    <div
-      style={{
-        padding: 28,
-        maxWidth: 1180,
-        margin: "0 auto",
-        color: colors.text,
-      }}
-    >
-      {/* Header */}
-      <div style={{ marginBottom: 18 }}>
-        <div style={{ fontSize: 12, letterSpacing: 2, opacity: 0.7 }}>
-          DECISION WORKBENCH · MVP
-        </div>
-        <h1 style={{ margin: "8px 0 6px", fontSize: 34 }}>
-          战略/机会判断 · 决策工作台
-        </h1>
-        <div style={{ opacity: 0.85, lineHeight: 1.6 }}>
-          输入一个你正在犹豫的关键机会（投不投、做不做、进入不进入）。
-          我会用“董事会式质询”帮你生成：假设、最大风险、验证信号与下一步行动。
-        </div>
-      </div>
-
-      {/* Input Card */}
-      <div
-        style={{
-          border: `1px solid ${colors.border}`,
-          borderRadius: 14,
-          padding: 16,
-          background: colors.cardBg,
-          marginBottom: 18,
-        }}
-      >
-        {/* Live mode toggle */}
-        <div
-          style={{
-            display: "flex",
-            gap: 10,
-            alignItems: "center",
-            flexWrap: "wrap",
-            marginBottom: 12,
-          }}
-        >
-          <label
-            style={{
-              display: "flex",
-              gap: 8,
-              alignItems: "center",
-              fontSize: 13,
-              opacity: 0.9,
-              color: colors.text,
-              fontWeight: 600,
-            }}
-          >
-            <input
-              type="checkbox"
-              checked={live}
-              onChange={(e) => setLive(e.target.checked)}
-            />
-            在线模式（现场有网时调用真实模型）
-          </label>
-
-          {live && (
-            <input
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder="输入 OpenAI API Key（仅本机演示用，不保存）"
-              style={{
-                flex: "1 1 420px",
-                borderRadius: 12,
-                padding: "10px 12px",
-                border: `1px solid ${colors.border}`,
-                background: colors.inputBg,
-                color: colors.text,
-                outline: "none",
-              }}
-            />
-          )}
-        </div>
-
-        {/* Templates */}
-        <div
-          style={{
-            display: "flex",
-            gap: 10,
-            flexWrap: "wrap",
-            marginBottom: 12,
-          }}
-        >
-          {templates.map((t) => (
-            <button
-              key={t.label}
-              onClick={() => {
-                setDecision(t.text);
-                setResult(null);
-              }}
-              style={{
-                ...btnBase,
-                fontWeight: 600,
-                fontSize: 12,
-                padding: "8px 12px",
-                borderRadius: 12,
-                border: `1px solid ${colors.border}`,
-                background: "rgba(255,255,255,0.06)",
-                cursor: "pointer",
-              }}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
-
-        <div style={{ fontSize: 13, opacity: 0.85, marginBottom: 8 }}>
-          你的决策主题（越具体越好）
-        </div>
-
-        <textarea
-          value={decision}
-          onChange={(e) => {
-            setDecision(e.target.value);
-            setResult(null);
-          }}
-          placeholder="例如：是否投入 300 万做一条 AI 决策助手产品线，目标客户是年营收 5–30 亿的民企一号位。"
-          rows={4}
-          style={{
-            width: "100%",
-            resize: "vertical",
-            borderRadius: 12,
-            padding: 12,
-            border: `1px solid ${colors.border}`,
-            background: colors.inputBg,
-            color: colors.text,
-            outline: "none",
-            lineHeight: 1.6,
-          }}
-        />
-
-        {/* Action Buttons */}
-        <div
-          style={{ display: "flex", gap: 10, marginTop: 12, flexWrap: "wrap" }}
-        >
-          <button
-            onClick={run}
-            disabled={!canRun || loading}
-            style={{
-              ...btnBase,
-              padding: "10px 14px",
-              borderRadius: 12,
-              border: "1px solid rgba(255,255,255,0.22)",
-              background: !canRun || loading ? colors.dimBg : colors.goldBg,
-              cursor: !canRun || loading ? "not-allowed" : "pointer",
-              opacity: !canRun || loading ? 0.65 : 1,
-            }}
-          >
-            {loading
-              ? "生成中..."
-              : live
-              ? "生成董事会式质询（在线）"
-              : "生成董事会式质询（离线）"}
-          </button>
-
-          <button
-            onClick={clear}
-            style={{
-              ...btnBase,
-              fontWeight: 600,
-              padding: "10px 14px",
-              borderRadius: 12,
-              border: `1px solid ${colors.border}`,
-              background: colors.dimBg,
-              cursor: "pointer",
-            }}
-          >
-            清空
-          </button>
-
-          {result && (
-            <button
-              onClick={() => copy(result.onePager)}
-              style={{
-                ...btnBase,
-                padding: "10px 14px",
-                borderRadius: 12,
-                border: "1px solid rgba(255,255,255,0.22)",
-                background: colors.goldBg,
-                cursor: "pointer",
-              }}
-            >
-              一键复制“决策一页纸”
-            </button>
-          )}
-        </div>
-
-        {!canRun && (
-          <div style={{ marginTop: 10, fontSize: 12, opacity: 0.75 }}>
-            提示：至少写 8 个字，并尽量包含金额/人群/时间/目标等要素。
+    <div style={{ fontFamily: fontStack, background: "#fff", minHeight: "100vh", color: "#202124" }}>
+      <div style={{ maxWidth: 1180, margin: "0 auto", padding: "22px 16px 44px" }}>
+        {/* Header */}
+        <div style={{ marginBottom: 14 }}>
+          <div style={{ fontSize: 12, letterSpacing: "0.12em", color: "#5f6368", textTransform: "uppercase", marginBottom: 10 }}>
+            DECISION WORKBENCH · MVP
           </div>
-        )}
-      </div>
+          <div style={{ fontSize: "clamp(26px, 3.2vw, 38px)", fontWeight: 900, lineHeight: 1.15, marginBottom: 8 }}>
+            战略/机会判断 · 决策工作台
+          </div>
+          <div style={{ color: "#5f6368", fontSize: 14, lineHeight: 1.7 }}>
+            输入一个你正在犹豫的关键机会（投不投、做不做、进入不进入）。我会用<strong>董事会式质询</strong>帮你输出：
+            假设、最大风险、验证信号与下一步行动。
+          </div>
+        </div>
 
-      {/* Output */}
-      {result && (
-        <div
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}
-        >
-          <Card
-            title="关键假设（先假设，再验证）"
-            items={result.assumptions}
-            colors={colors}
-          />
-          <Card
-            title="最大风险（优先排雷）"
-            items={result.risks}
-            colors={colors}
-          />
-          <Card
-            title="验证信号（哪些行为=真的）"
-            items={result.signals}
-            colors={colors}
-          />
-          <Card
-            title="下一步行动（30天MVP）"
-            items={result.nextSteps}
-            colors={colors}
-          />
+        {/* Main grid */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.05fr", gap: 14, alignItems: "start" }}>
+          {/* Left: Input */}
+          <div
+            style={{
+              border: "1px solid #e0e0e0",
+              borderRadius: 16,
+              background: "#ffffff",
+              boxShadow: "0 1px 2px rgba(60,64,67,0.12), 0 1px 3px rgba(60,64,67,0.08)",
+              padding: 16,
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+              <div>
+                <div style={{ fontSize: 16, fontWeight: 900 }}>输入</div>
+                <div style={{ fontSize: 12, color: "#5f6368", marginTop: 4 }}>
+                  离线永不翻车；在线可演示真实模型（仅本机 Key）
+                </div>
+              </div>
 
-          <div style={{ gridColumn: "1 / -1" }}>
-            <div style={{ fontSize: 14, opacity: 0.9, margin: "10px 0 6px" }}>
-              决策一页纸（可发给团队）
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "flex-end" }}>
+                {templates.map((t) => (
+                  <button
+                    key={t.label}
+                    onClick={() => {
+                      setDecision(t.text);
+                      setResult(null);
+                    }}
+                    style={pill(false)}
+                  >
+                    {t.label}
+                  </button>
+                ))}
+              </div>
             </div>
-            <pre
-              style={{
-                whiteSpace: "pre-wrap",
-                borderRadius: 14,
-                border: "1px solid rgba(255,255,255,0.15)",
-                padding: 14,
-                background: colors.cardBg,
-                lineHeight: 1.6,
-                margin: 0,
-                color: colors.text,
-              }}
-            >
-              {result.onePager}
-            </pre>
+
+            {/* Live toggle */}
+            <div style={{ marginTop: 12, display: "grid", gap: 10 }}>
+              <label style={{ display: "flex", gap: 10, alignItems: "center", fontSize: 13, color: "#202124", fontWeight: 900 }}>
+                <input type="checkbox" checked={live} onChange={(e) => setLive(e.target.checked)} />
+                在线模式（现场有网时调用真实模型）
+              </label>
+
+              {live && (
+                <input
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                  placeholder="输入 OpenAI API Key（仅本机演示用，不保存）"
+                  style={{
+                    width: "100%",
+                    padding: "10px 12px",
+                    borderRadius: 12,
+                    border: "1px solid #e0e0e0",
+                    outline: "none",
+                    fontSize: 14,
+                  }}
+                />
+              )}
+            </div>
+
+            {/* Decision textarea */}
+            <div style={{ marginTop: 12 }}>
+              <div style={{ fontSize: 12, color: "#5f6368", fontWeight: 900, marginBottom: 6 }}>你的决策主题（越具体越好）</div>
+              <textarea
+                value={decision}
+                onChange={(e) => {
+                  setDecision(e.target.value);
+                  setResult(null);
+                }}
+                placeholder="例如：是否投入 300 万做一条 AI 决策助手产品线，目标客户是年营收 5–30 亿的民企一号位。"
+                rows={7}
+                style={{
+                  width: "100%",
+                  padding: "10px 12px",
+                  borderRadius: 12,
+                  border: "1px solid #e0e0e0",
+                  outline: "none",
+                  fontSize: 14,
+                  lineHeight: 1.6,
+                  resize: "vertical",
+                }}
+              />
+              {!canRun && (
+                <div style={{ marginTop: 10, fontSize: 12, color: "#5f6368", lineHeight: 1.6 }}>
+                  提示：至少写 8 个字，并尽量包含金额/人群/时间/目标等要素。
+                </div>
+              )}
+            </div>
+
+            {/* Actions */}
+            <div style={{ display: "flex", gap: 10, marginTop: 14, flexWrap: "wrap" }}>
+              <button onClick={run} disabled={!canRun || loading} style={buttonPrimary(canRun && !loading)}>
+                {loading ? "生成中..." : live ? "生成（在线）" : "生成（离线）"}
+              </button>
+
+              <button onClick={clear} style={buttonGhost(true)}>
+                清空
+              </button>
+
+              <button onClick={() => result && copy(result.onePager)} disabled={!result} style={buttonGhost(!!result)}>
+                复制“决策一页纸”
+              </button>
+            </div>
+
+            {live && (
+              <div style={{ marginTop: 12, fontSize: 12, color: "#5f6368", lineHeight: 1.6 }}>
+                提醒：在线模式为演示方便，API Key 仅在当前页面内存中使用，不会保存。
+                若要长期给客户用，建议用后端代理接口保护密钥。
+              </div>
+            )}
+          </div>
+
+          {/* Right: Output */}
+          <div
+            style={{
+              border: "1px solid #e0e0e0",
+              borderRadius: 16,
+              background: "#ffffff",
+              boxShadow: "0 1px 2px rgba(60,64,67,0.12), 0 1px 3px rgba(60,64,67,0.08)",
+              padding: 16,
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "baseline" }}>
+              <div>
+                <div style={{ fontSize: 16, fontWeight: 900 }}>输出</div>
+                <div style={{ fontSize: 12, color: "#5f6368", marginTop: 4 }}>假设 / 风险 / 信号 / 行动 / 一页纸</div>
+              </div>
+              <div style={{ fontSize: 12, color: "#174ea6", fontWeight: 900 }}>结构清晰 · 直接可用</div>
+            </div>
+
+            {!result ? (
+              <div
+                style={{
+                  marginTop: 14,
+                  borderRadius: 14,
+                  border: "1px dashed rgba(60,64,67,0.25)",
+                  background: "rgba(60,64,67,0.04)",
+                  padding: 14,
+                  color: "#5f6368",
+                  lineHeight: 1.7,
+                  fontSize: 14,
+                }}
+              >
+                还没有输出。填写左侧决策主题并点击「生成」。
+              </div>
+            ) : (
+              <div style={{ marginTop: 14, display: "grid", gap: 12 }}>
+                <MiniCard title="关键假设（先假设，再验证）" items={result.assumptions} />
+                <MiniCard title="最大风险（优先排雷）" items={result.risks} />
+                <MiniCard title="验证信号（哪些行为=真的）" items={result.signals} />
+                <MiniCard title="下一步行动（30天MVP）" items={result.nextSteps} />
+
+                <div style={{ marginTop: 4 }}>
+                  <div style={{ fontSize: 12, color: "#5f6368", fontWeight: 900, marginBottom: 6 }}>
+                    决策一页纸（可发给团队）
+                  </div>
+                  <pre
+                    style={{
+                      whiteSpace: "pre-wrap",
+                      borderRadius: 14,
+                      border: "1px solid #e0e0e0",
+                      padding: 12,
+                      background: "rgba(60,64,67,0.04)",
+                      lineHeight: 1.65,
+                      margin: 0,
+                      color: "#202124",
+                      fontSize: 13,
+                    }}
+                  >
+                    {result.onePager}
+                  </pre>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      )}
-
-      {/* Footer hint for live mode */}
-      {live && (
-        <div
-          style={{
-            marginTop: 16,
-            fontSize: 12,
-            opacity: 0.65,
-            lineHeight: 1.6,
-          }}
-        >
-          提醒：在线模式为演示方便，API Key 仅在当前页面内存中使用，不会保存。
-          若要给客户长期使用，建议用后端代理接口来保护密钥。
-        </div>
-      )}
+      </div>
     </div>
   );
 }
 
-function Card({
-  title,
-  items,
-  colors,
-}: {
-  title: string;
-  items: string[];
-  colors: {
-    text: string;
-    border: string;
-    cardBg: string;
-  };
-}) {
+function MiniCard({ title, items }: { title: string; items: string[] }) {
   return (
-    <div
-      style={{
-        borderRadius: 14,
-        border: `1px solid ${colors.border}`,
-        background: colors.cardBg,
-        padding: 14,
-        minHeight: 120,
-        color: colors.text,
-      }}
-    >
-      <div style={{ fontSize: 14, opacity: 0.9, marginBottom: 8 }}>{title}</div>
-
+    <div style={{ border: "1px solid #e0e0e0", borderRadius: 14, padding: 12, background: "#fff" }}>
+      <div style={{ fontSize: 13, fontWeight: 900, marginBottom: 8 }}>{title}</div>
       {items.length === 0 ? (
-        <div style={{ fontSize: 12, opacity: 0.65 }}>（暂无）</div>
+        <div style={{ fontSize: 12, color: "#5f6368" }}>（暂无）</div>
       ) : (
-        <ul
-          style={{ margin: 0, paddingLeft: 18, lineHeight: 1.75, opacity: 0.9 }}
-        >
+        <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.75, color: "#5f6368", fontSize: 13 }}>
           {items.map((x, i) => (
             <li key={i}>{x}</li>
           ))}
