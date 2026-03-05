@@ -1,3 +1,4 @@
+import DecisionRoom from "./DecisionRoom"
 import Experience from "./Experience";
 import { useState } from "react";
 import type { ReactNode } from "react";
@@ -1161,3 +1162,4 @@ export default function App() {
 
   return <BusinessPlan goExperience={() => setPage("experience")} />;
 }
+<DecisionRoom />
