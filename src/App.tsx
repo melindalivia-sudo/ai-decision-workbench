@@ -266,71 +266,61 @@ function BusinessPlan({
   return (
     <div
       style={{
-        fontFamily: "'Georgia', 'Noto Serif SC', serif",
-        background: "#0a0c10",
-        minHeight: "100vh",
-        color: "#e8dcc8",
-        padding: "0",
+  fontFamily:
+    "'Microsoft YaHei','微软雅黑', Arial, 'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Segoe UI', Roboto, sans-serif",
+  background: "#ffffff",
+  minHeight: "100vh",
+  color: "#202124",
+  padding: "0",
+}}
+    >
+     {/* Header */}
+<div
+  style={{
+    background: "#ffffff",
+    borderBottom: "1px solid #e0e0e0",
+    padding: "28px 40px 18px",
+  }}
+>
+  <div>
+    <div
+      style={{
+        fontSize: "12px",
+        letterSpacing: "0.12em",
+        color: "#5f6368",
+        textTransform: "uppercase",
+        marginBottom: "10px",
+        fontFamily:
+          "'Microsoft YaHei','微软雅黑', Arial, 'Segoe UI', Roboto, sans-serif",
       }}
     >
-      {/* Header */}
-      <div
-        style={{
-          background:
-            "linear-gradient(135deg, #0f1318 0%, #1a1408 50%, #0f1318 100%)",
-          borderBottom: "1px solid #b8960030",
-          padding: "32px 40px 24px",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundImage:
-              "radial-gradient(ellipse at 20% 50%, #b8960012 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, #8b6a0010 0%, transparent 50%)",
-          }}
-        />
-        <div style={{ position: "relative" }}>
-          <div
-            style={{
-              fontSize: "11px",
-              letterSpacing: "4px",
-              color: "#b89600",
-              textTransform: "uppercase",
-              marginBottom: "8px",
-              fontFamily: "monospace",
-            }}
-          >
-            BUSINESS PLAN · 商业计划书 · 2025
-          </div>
-          <h1
-            style={{
-              fontSize: "clamp(24px, 4vw, 42px)",
-              fontWeight: "400",
-              margin: "0 0 6px",
-              letterSpacing: "2px",
-              color: "#f0e6d0",
-            }}
-          >
-            {data.overview.name}
-          </h1>
-          <p
-            style={{
-              fontSize: "15px",
-              color: "#b89600",
-              margin: 0,
-              fontStyle: "italic",
-            }}
-          >
-            {data.overview.tagline}
-          </p>
-        </div>
-      </div>
+      BUSINESS PLAN · 商业计划书 · 2025
+    </div>
+
+    <h1
+      style={{
+        fontSize: "clamp(28px, 3.8vw, 44px)",
+        fontWeight: 800,
+        margin: "0 0 8px",
+        letterSpacing: "0.2px",
+        color: "#202124",
+        lineHeight: 1.15,
+      }}
+    >
+      {data.overview.name}
+    </h1>
+
+    <p
+      style={{
+        fontSize: "15px",
+        color: "#5f6368",
+        margin: 0,
+      }}
+    >
+      {data.overview.tagline}
+    </p>
+  </div>
+</div>
 
       {/* Tabs */}
       <div
