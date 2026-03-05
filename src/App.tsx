@@ -295,7 +295,7 @@ function BusinessPlan({
               fontFamily: fontStack,
             }}
           >
-            BUSINESS PLAN · 商业计划书 · 2025
+            BUSINESS PLAN · 商业计划书 · 2026
           </div>
 
           <h1
