@@ -1,7 +1,6 @@
-import DecisionRoom from "./DecisionRoom"
-import Experience from "./Experience";
 import { useState } from "react";
-import type { ReactNode } from "react";
+import Experience from "./Experience";
+import DecisionRoom from "./DecisionRoom";
 
 const data = {
   overview: {
@@ -216,7 +215,8 @@ const data = {
     {
       risk: "信任建立难度高",
       level: "高",
-      mitigation: "创始团队必须有CEO圈子背景；邀请制冷启动；提供免费深度体验期",
+      mitigation:
+        "创始团队必须有CEO圈子背景；邀请制冷启动；提供免费深度体验期",
     },
     {
       risk: "数据安全顾虑",
@@ -232,7 +232,8 @@ const data = {
     {
       risk: "竞争对手快速跟进",
       level: "中",
-      mitigation: "深度定制护城河；CEO决策档案的迁移成本；率先建立品牌认知",
+      mitigation:
+        "深度定制护城河；CEO决策档案的迁移成本；率先建立品牌认知",
     },
     {
       risk: "付费决策链长",
@@ -340,6 +341,7 @@ function BusinessPlan({
           borderBottom: "1px solid #b8960020",
           background: "#0d0f14",
           padding: "0 24px",
+          alignItems: "center",
         }}
       >
         {tabs.map((t, i) => (
@@ -365,61 +367,131 @@ function BusinessPlan({
           </button>
         ))}
 
-        <button
-          onClick={goExperience}
+        {/* Right action buttons */}
+        <div
           style={{
-            marginLeft: 12,
-            padding: "10px 14px",
-            borderRadius: 12,
-            border: "1px solid rgba(255,215,0,0.35)",
-            background: "rgba(255,215,0,0.10)",
-            color: "#e8dcc8",
-            cursor: "pointer",
-            fontSize: "12px",
-            whiteSpace: "nowrap",
-            letterSpacing: "0.5px",
+            marginLeft: "auto",
+            display: "flex",
+            gap: 10,
+            alignItems: "center",
           }}
         >
-          立即体验
-        </button>
+          <button
+            onClick={goDecision}
+            style={{
+              padding: "10px 14px",
+              borderRadius: 12,
+              border: "1px solid rgba(255,215,0,0.45)",
+              background: "rgba(255,215,0,0.14)",
+              color: "#e8dcc8",
+              cursor: "pointer",
+              fontSize: "12px",
+              whiteSpace: "nowrap",
+              letterSpacing: "0.5px",
+            }}
+          >
+            CEO 决策对话框
+          </button>
+
+          <button
+            onClick={goExperience}
+            style={{
+              padding: "10px 14px",
+              borderRadius: 12,
+              border: "1px solid rgba(255,255,255,0.18)",
+              background: "rgba(255,255,255,0.06)",
+              color: "#e8dcc8",
+              cursor: "pointer",
+              fontSize: "12px",
+              whiteSpace: "nowrap",
+              letterSpacing: "0.5px",
+            }}
+          >
+            立即体验
+          </button>
+        </div>
       </div>
 
       {/* Content */}
-      <div style={{ marginLeft: "auto", display: "flex", gap: 10, alignItems: "center" }}>
-  <button
-    onClick={goDecision}
-    style={{
-      padding: "10px 14px",
-      borderRadius: 12,
-      border: "1px solid rgba(255,215,0,0.45)",
-      background: "rgba(255,215,0,0.14)",
-      color: "#e8dcc8",
-      cursor: "pointer",
-      fontSize: "12px",
-      whiteSpace: "nowrap",
-      letterSpacing: "0.5px",
-    }}
-  >
-    CEO 决策对话框
-  </button>
-
-  <button
-    onClick={goExperience}
-    style={{
-      padding: "10px 14px",
-      borderRadius: 12,
-      border: "1px solid rgba(255,255,255,0.18)",
-      background: "rgba(255,255,255,0.06)",
-      color: "#e8dcc8",
-      cursor: "pointer",
-      fontSize: "12px",
-      whiteSpace: "nowrap",
-      letterSpacing: "0.5px",
-    }}
-  >
-    立即体验
-  </button>
-</div>
+      <div style={{ padding: "32px 40px", maxWidth: "960px", margin: "0 auto" }}>
+        {/* Tab 0: Overview */}
+        {active === 0 && (
+          <div>
+            <Gold small={false}>执行摘要</Gold>
+            <p
+              style={{
+                fontSize: "16px",
+                lineHeight: "1.9",
+                color: "#c8b898",
+                marginBottom: "32px",
+                borderLeft: "3px solid #b89600",
+                paddingLeft: "20px",
+              }}
+            >
+              {data.overview.mission}
+            </p>
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#8a7a60",
+                lineHeight: "1.8",
+                marginBottom: "40px",
+              }}
+            >
+              <b style={{ color: "#c8b898" }}>愿景：</b>
+              {data.overview.vision}
+            </p>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                gap: "16px",
+              }}
+            >
+              {data.overview.highlights.map((h, i) => (
+                <div
+                  key={i}
+                  style={{
+                    background: "linear-gradient(135deg, #1a1810, #141008)",
+                    border: "1px solid #b8960030",
+                    borderRadius: "8px",
+                    padding: "24px 20px",
+                    textAlign: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "28px",
+                      fontWeight: "700",
+                      color: "#b89600",
+                      letterSpacing: "-1px",
+                    }}
+                  >
+                    {h.value}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      color: "#8a7a60",
+                      marginTop: "6px",
+                    }}
+                  >
+                    {h.label}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "11px",
+                      color: "#5a4a30",
+                      marginTop: "4px",
+                    }}
+                  >
+                    {h.sub}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Tab 1: Problem */}
         {active === 1 && (
@@ -616,13 +688,17 @@ function BusinessPlan({
                     </div>
                   </div>
                   <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: "12px", color: "#5a4a30" }}>规模</div>
+                    <div style={{ fontSize: "12px", color: "#5a4a30" }}>
+                      规模
+                    </div>
                     <div style={{ fontSize: "14px", color: "#c8b898" }}>
                       {s.size}
                     </div>
                   </div>
                   <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: "12px", color: "#5a4a30" }}>定价</div>
+                    <div style={{ fontSize: "12px", color: "#5a4a30" }}>
+                      定价
+                    </div>
                     <div style={{ fontSize: "14px", color: "#b89600" }}>
                       {s.price}
                     </div>
@@ -632,7 +708,8 @@ function BusinessPlan({
                       fontSize: "10px",
                       padding: "4px 12px",
                       borderRadius: "20px",
-                      background: s.priority === "高" ? "#b8960020" : "#ffffff05",
+                      background:
+                        s.priority === "高" ? "#b8960020" : "#ffffff05",
                       color: s.priority === "高" ? "#b89600" : "#4a3a20",
                       border: `1px solid ${
                         s.priority === "高" ? "#b8960040" : "#ffffff08"
@@ -906,11 +983,15 @@ function BusinessPlan({
                   background: "linear-gradient(to bottom, #b89600, #b8960030)",
                 }}
               />
-              <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
                 {data.roadmap.map((r, i) => (
                   <div
                     key={i}
-                    style={{ display: "flex", gap: "24px", alignItems: "flex-start" }}
+                    style={{
+                      display: "flex",
+                      gap: "24px",
+                      alignItems: "flex-start",
+                    }}
                   >
                     <div style={{ textAlign: "right", minWidth: "90px" }}>
                       <div
@@ -928,12 +1009,12 @@ function BusinessPlan({
                     </div>
                     <div
                       style={{
-                        width: "12px",
-                        height: "12px",
+                        width: 12,
+                        height: 12,
                         borderRadius: "50%",
                         background: "#b89600",
                         flexShrink: 0,
-                        marginTop: "4px",
+                        marginTop: 4,
                         boxShadow: "0 0 12px #b8960060",
                       }}
                     />
@@ -956,16 +1037,32 @@ function BusinessPlan({
                       >
                         {r.title}
                       </div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                         {r.tasks.map((t, j) => (
                           <div
                             key={j}
-                            style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}
+                            style={{
+                              display: "flex",
+                              gap: 8,
+                              alignItems: "flex-start",
+                            }}
                           >
-                            <span style={{ color: "#b89600", fontSize: "12px", marginTop: "2px" }}>
+                            <span
+                              style={{
+                                color: "#b89600",
+                                fontSize: 12,
+                                marginTop: 2,
+                              }}
+                            >
                               —
                             </span>
-                            <span style={{ fontSize: "12px", color: "#7a6a50", lineHeight: "1.6" }}>
+                            <span
+                              style={{
+                                fontSize: 12,
+                                color: "#7a6a50",
+                                lineHeight: "1.6",
+                              }}
+                            >
                               {t}
                             </span>
                           </div>
@@ -989,7 +1086,9 @@ function BusinessPlan({
                   key={i}
                   style={{
                     background: "#12100a",
-                    border: `1px solid ${r.level === "高" ? "#ff4a2025" : "#b8960020"}`,
+                    border: `1px solid ${
+                      r.level === "高" ? "#ff4a2025" : "#b8960020"
+                    }`,
                     borderRadius: "8px",
                     padding: "20px 24px",
                   }}
@@ -1002,7 +1101,13 @@ function BusinessPlan({
                       marginBottom: "10px",
                     }}
                   >
-                    <div style={{ fontSize: "14px", color: "#e0cfa8", fontWeight: "600" }}>
+                    <div
+                      style={{
+                        fontSize: "14px",
+                        color: "#e0cfa8",
+                        fontWeight: "600",
+                      }}
+                    >
                       {r.risk}
                     </div>
                     <span
@@ -1010,15 +1115,24 @@ function BusinessPlan({
                         fontSize: "10px",
                         padding: "3px 12px",
                         borderRadius: "20px",
-                        background: r.level === "高" ? "#ff4a2018" : "#b8960018",
+                        background:
+                          r.level === "高" ? "#ff4a2018" : "#b8960018",
                         color: r.level === "高" ? "#ff6a40" : "#b89600",
-                        border: `1px solid ${r.level === "高" ? "#ff4a2030" : "#b8960030"}`,
+                        border: `1px solid ${
+                          r.level === "高" ? "#ff4a2030" : "#b8960030"
+                        }`,
                       }}
                     >
                       风险等级: {r.level}
                     </span>
                   </div>
-                  <div style={{ fontSize: "13px", color: "#6a5a40", lineHeight: "1.7" }}>
+                  <div
+                    style={{
+                      fontSize: "13px",
+                      color: "#6a5a40",
+                      lineHeight: "1.7",
+                    }}
+                  >
                     <span style={{ color: "#4a7a50" }}>应对策略：</span>
                     {r.mitigation}
                   </div>
@@ -1045,7 +1159,13 @@ function BusinessPlan({
               >
                 核心投资假设
               </div>
-              <div style={{ fontSize: "13px", color: "#6a5a40", lineHeight: "1.8" }}>
+              <div
+                style={{
+                  fontSize: "13px",
+                  color: "#6a5a40",
+                  lineHeight: "1.8",
+                }}
+              >
                 中国民企CEO群体有极强的付费能力与付费意愿——他们已经在猎头、咨询、私董会上花费数十甚至数百万。
                 本产品的核心赌注是：
                 <span style={{ color: "#c8b898" }}>
@@ -1076,7 +1196,13 @@ function BusinessPlan({
   );
 }
 
-function Gold({ children, small = false }: { children: ReactNode; small?: boolean }) {
+function Gold({
+  children,
+  small = false,
+}: {
+  children: React.ReactNode;
+  small?: boolean;
+}) {
   return (
     <div
       style={{
@@ -1095,30 +1221,32 @@ function Gold({ children, small = false }: { children: ReactNode; small?: boolea
     </div>
   );
 }
-if (page === "decision") {
-  return (
-    <div style={{ background: "#0a0c10", minHeight: "100vh", color: "#e8dcc8" }}>
-      <div style={{ padding: 16, maxWidth: 1200, margin: "0 auto" }}>
-        <button
-          onClick={() => setPage("plan")}
-          style={{
-            padding: "8px 12px",
-            borderRadius: 12,
-            border: "1px solid rgba(255,255,255,0.18)",
-            background: "rgba(255,255,255,0.06)",
-            color: "#e8dcc8",
-            cursor: "pointer",
-          }}
-        >
-          ← 返回商业计划书
-        </button>
-      </div>
-      <DecisionRoom />
-    </div>
-  );
-}
+
 export default function App() {
   const [page, setPage] = useState<"plan" | "experience" | "decision">("plan");
+
+  if (page === "decision") {
+    return (
+      <div style={{ background: "#0a0c10", minHeight: "100vh", color: "#e8dcc8" }}>
+        <div style={{ padding: 16, maxWidth: 1200, margin: "0 auto" }}>
+          <button
+            onClick={() => setPage("plan")}
+            style={{
+              padding: "8px 12px",
+              borderRadius: 12,
+              border: "1px solid rgba(255,255,255,0.18)",
+              background: "rgba(255,255,255,0.06)",
+              color: "#e8dcc8",
+              cursor: "pointer",
+            }}
+          >
+            ← 返回商业计划书
+          </button>
+        </div>
+        <DecisionRoom />
+      </div>
+    );
+  }
 
   if (page === "experience") {
     return (
@@ -1143,9 +1271,11 @@ export default function App() {
     );
   }
 
-return (
-  <BusinessPlan
-    goExperience={() => setPage("experience")}
-    goDecision={() => setPage("decision")}
-  />
-);
+  // 计划书页：给 BusinessPlan 注入入口函数
+  return (
+    <BusinessPlan
+      goExperience={() => setPage("experience")}
+      goDecision={() => setPage("decision")}
+    />
+  );
+}
